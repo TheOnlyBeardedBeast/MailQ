@@ -48,7 +48,6 @@ public class TemplateService
 
         if (cache.TryGetValue<MailTemplate>(key, out template))
         {
-            Console.WriteLine("In cache");
             return template;
         }
 
@@ -57,7 +56,6 @@ public class TemplateService
 
         if (dbTemplate is not null)
         {
-            Console.WriteLine("In db");
             return this.AddTemplate(dbTemplate);
         }
 
