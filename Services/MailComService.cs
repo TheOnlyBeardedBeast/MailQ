@@ -1,6 +1,7 @@
 using Grpc.Core;
 using LiteDB;
 using MailQ.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MailQ.Services;
 
@@ -12,6 +13,7 @@ public interface IMailComService
     Task<AddTemplateResponse> UpdateTemplate(AddTemplateRequest request, ServerCallContext context);
 }
 
+[Authorize]
 public class MailComService : Mailcom.MailcomBase, IMailComService
 {
     private readonly IMailSender mailer;

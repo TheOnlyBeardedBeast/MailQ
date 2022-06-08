@@ -1,5 +1,7 @@
+using AspNetCore.Authentication.ApiKey;
 using LiteDB;
 using MailQ.Services;
+using MailTrue.Utils;
 
 namespace MailQ.Extensions;
 
@@ -16,6 +18,13 @@ public static class ServiceExtensions
         services.AddTransient<ITemplateService, TemplateService>();
         services.AddSingleton<IMailService, MailService>();
         services.AddHostedService<SchedulerService>();
+
+        services.AddAuthorization().AddAuthentication(ApiKeyDefaults.AuthenticationScheme)
+            .AddApiKeyInHeaderOrQueryParams<ApiKeyProvider>(options =>
+            {
+                options.Realm = "MailQ";
+                options.KeyName = "X-API-KEY";
+            });
 
         return services;
     }
