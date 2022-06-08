@@ -1,16 +1,16 @@
+
+using System.Collections.Concurrent;
 namespace MailQ.Services;
 
 public class MailService
 {
     private object Lock = new object();
-    private List<SendMailRequest> MailQueue = new List<SendMailRequest>();
+    private ConcurrentQueue<SendMailRequest> MailQueue = new ConcurrentQueue<SendMailRequest>();
+    // private List<SendMailRequest> MailQueue = new List<SendMailRequest>();
 
     public Task AddMail(SendMailRequest mail)
     {
-        lock (Lock)
-        {
-            this.MailQueue.Add(mail);
-        }
+        this.MailQueue.Enqueue(mail);
 
         return Task.CompletedTask;
     }
@@ -19,11 +19,9 @@ public class MailService
     {
         List<SendMailRequest> result;
 
-        lock (Lock)
-        {
-            result = MailQueue.ToList();
-            this.MailQueue.Clear();
-        }
+        result = MailQueue.ToList();
+        this.MailQueue.Clear();
+
 
         return Task.FromResult(result);
     }
