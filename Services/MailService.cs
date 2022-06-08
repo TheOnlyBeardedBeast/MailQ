@@ -2,15 +2,20 @@
 using System.Collections.Concurrent;
 namespace MailQ.Services;
 
-public class MailService
+public interface IMailService
 {
-    private object Lock = new object();
-    private ConcurrentQueue<SendMailRequest> MailQueue = new ConcurrentQueue<SendMailRequest>();
+    Task AddMail(SendMailRequest mail);
+    Task<List<SendMailRequest>> GetMailQ();
+}
+
+public class MailService : IMailService
+{
+    private ConcurrentBag<SendMailRequest> MailQueue = new ConcurrentBag<SendMailRequest>();
     // private List<SendMailRequest> MailQueue = new List<SendMailRequest>();
 
     public Task AddMail(SendMailRequest mail)
     {
-        this.MailQueue.Enqueue(mail);
+        this.MailQueue.Add(mail);
 
         return Task.CompletedTask;
     }

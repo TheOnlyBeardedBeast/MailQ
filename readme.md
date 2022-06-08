@@ -20,9 +20,9 @@ service Mailcom {
 
 message SendMailRequest {
   string to = 1;
-  string templateKey = 3;
-  map<string,string> mailData = 4;
-  map<string,string> subjectData = 5;
+  string templateKey = 2;
+  map<string,string> mailData = 3;
+  map<string,string> subjectData = 4;
 }
 
 message SendMailResponse {

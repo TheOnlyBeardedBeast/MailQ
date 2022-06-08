@@ -5,7 +5,15 @@ using Mjml.Net;
 
 namespace MailQ.Services;
 
-public class TemplateService
+public interface ITemplateService
+{
+    MailTemplate AddTemplate(MailTemplate template);
+    MailTemplate? GetTemplate(string key);
+    void RemoveTemplate(string key);
+    MailTemplate UpdateTemplate(MailTemplate template);
+}
+
+public class TemplateService : ITemplateService
 {
     protected readonly MjmlRenderer renderer;
     protected readonly IMemoryCache cache;

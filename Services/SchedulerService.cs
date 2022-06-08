@@ -3,15 +3,22 @@ using Stubble.Core.Builders;
 
 namespace MailQ.Services;
 
-public class SchedulerService : IHostedService
+public interface ISchedulerService
+{
+    Task StartAsync(CancellationToken cancellationToken);
+    Task StopAsync(CancellationToken cancellationToken);
+    Task WorkLoop();
+}
+
+public class SchedulerService : IHostedService, ISchedulerService
 {
     private readonly PeriodicTimer t;
-    private readonly MailService ms;
-    private readonly TemplateService ts;
+    private readonly IMailService ms;
+    private readonly ITemplateService ts;
     private readonly IMailSender mailer;
     private readonly StubbleVisitorRenderer renderer;
 
-    public SchedulerService(MailService ms, TemplateService ts, IMailSender mailer)
+    public SchedulerService(IMailService ms, ITemplateService ts, IMailSender mailer)
     {
         this.t = new PeriodicTimer(TimeSpan.FromSeconds(60));
         this.ms = ms;

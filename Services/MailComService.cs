@@ -4,14 +4,22 @@ using MailQ.Models;
 
 namespace MailQ.Services;
 
-public class MailComService : Mailcom.MailcomBase
+public interface IMailComService
+{
+    Task<AddTemplateResponse> AddTemplate(AddTemplateRequest request, ServerCallContext context);
+    Task<AddTemplateResponse> RemoveTemplate(RemoveTemplateRequest request, ServerCallContext context);
+    Task<SendMailResponse> SendMail(SendMailRequest request, ServerCallContext context);
+    Task<AddTemplateResponse> UpdateTemplate(AddTemplateRequest request, ServerCallContext context);
+}
+
+public class MailComService : Mailcom.MailcomBase, IMailComService
 {
     private readonly IMailSender mailer;
     private readonly LiteDatabase db;
-    private readonly TemplateService ts;
-    private readonly MailService ms;
+    private readonly ITemplateService ts;
+    private readonly IMailService ms;
 
-    public MailComService(IMailSender mailer, LiteDatabase db, TemplateService ts, MailService ms)
+    public MailComService(IMailSender mailer, LiteDatabase db, ITemplateService ts, IMailService ms)
     {
         this.mailer = mailer;
         this.db = db;

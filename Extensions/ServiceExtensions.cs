@@ -13,8 +13,8 @@ public static class ServiceExtensions
     public static IServiceCollection AddMailQ(this IServiceCollection services)
     {
         services.AddTransient<IMailSender, MailSender>();
-        services.AddTransient<TemplateService>();
-        services.AddSingleton<MailService>();
+        services.AddTransient<ITemplateService, TemplateService>();
+        services.AddSingleton<IMailService, MailService>();
         services.AddHostedService<SchedulerService>();
 
         return services;
