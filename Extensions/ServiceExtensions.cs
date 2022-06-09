@@ -28,4 +28,9 @@ public static class ServiceExtensions
 
         return services;
     }
+
+    public static GrpcServiceEndpointConventionBuilder MapMailQ(this WebApplication app)
+    {
+        return app.MapGrpcService<MailComService>();
+    }
 }
