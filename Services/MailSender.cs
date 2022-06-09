@@ -20,9 +20,9 @@ public class MailSender : IMailSender
     private readonly MailSenderOptions options = new MailSenderOptions();
     private readonly SmtpClient client;
 
-    public MailSender(IConfiguration configuration)
+    public MailSender(Action<MailSenderOptions> setupOptions)
     {
-        configuration.GetSection("MailSenderOptions").Bind(this.options);
+        setupOptions.Invoke(options);
 
         client = new SmtpClient(this.options.Host, this.options.Port);
         client.UseDefaultCredentials = false;
