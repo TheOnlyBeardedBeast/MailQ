@@ -18,9 +18,9 @@ public class SchedulerService : IHostedService, ISchedulerService
     private readonly IMailSender mailer;
     private readonly StubbleVisitorRenderer renderer;
 
-    public SchedulerService(IMailService ms, ITemplateService ts, IMailSender mailer)
+    public SchedulerService(IMailService ms, ITemplateService ts, IMailSender mailer, int interval)
     {
-        this.t = new PeriodicTimer(TimeSpan.FromSeconds(60));
+        this.t = new PeriodicTimer(TimeSpan.FromSeconds(interval));
         this.ms = ms;
         this.ts = ts;
         this.mailer = mailer;

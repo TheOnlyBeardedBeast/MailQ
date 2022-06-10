@@ -18,11 +18,18 @@ public static class ServiceExtensions
         var Host = Environment.GetEnvironmentVariable("SMTP_HOST");
         var Email = Environment.GetEnvironmentVariable("SMTP_EMAIL");
         var Password = Environment.GetEnvironmentVariable("SMTP_PASS");
+        var ApiKey = Environment.GetEnvironmentVariable("API_KEY");
         int PortInt;
 
-        if (Port is null || Host is null || Email is null || Password is null || !int.TryParse(Port, out PortInt))
+        if (Port is null || Host is null || Email is null || Password is null || ApiKey is null || !int.TryParse(Port, out PortInt))
         {
             throw new Exception("Missing smtp configuration");
+        }
+
+        int MailInterval;
+        if (!int.TryParse(Environment.GetEnvironmentVariable("MAIL_INTERVAL"), out MailInterval))
+        {
+            MailInterval = 60;
         }
 
         services.AddTransient<IMailSender, MailSender>(_ => new MailSender(options =>
@@ -35,7 +42,7 @@ public static class ServiceExtensions
 
         services.AddTransient<ITemplateService, TemplateService>();
         services.AddSingleton<IMailService, MailService>();
-        services.AddHostedService<SchedulerService>();
+        services.AddHostedService<SchedulerService>(sp => new SchedulerService(sp.GetRequiredService<IMailService>(), sp.GetRequiredService<ITemplateService>(), sp.GetRequiredService<IMailSender>(), MailInterval));
 
         services.AddAuthorization().AddAuthentication(ApiKeyDefaults.AuthenticationScheme)
             .AddApiKeyInHeaderOrQueryParams<ApiKeyProvider>(options =>

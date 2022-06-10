@@ -11,7 +11,6 @@ public interface IMailService
 public class MailService : IMailService
 {
     private ConcurrentBag<SendMailRequest> MailQueue = new ConcurrentBag<SendMailRequest>();
-    // private List<SendMailRequest> MailQueue = new List<SendMailRequest>();
 
     public Task AddMail(SendMailRequest mail)
     {
