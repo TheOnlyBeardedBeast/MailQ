@@ -26,10 +26,17 @@ public static class ServiceExtensions
             throw new Exception("Missing smtp configuration");
         }
 
+
         int MailInterval;
         if (!int.TryParse(Environment.GetEnvironmentVariable("MAIL_INTERVAL"), out MailInterval))
         {
             MailInterval = 60;
+        }
+
+        bool TLS;
+        if (!bool.TryParse(Environment.GetEnvironmentVariable("SMTP_TLS"), out TLS))
+        {
+            TLS = false;
         }
 
         services.AddTransient<IMailSender, MailSender>(_ => new MailSender(options =>
@@ -38,6 +45,7 @@ public static class ServiceExtensions
             options.Host = Host;
             options.Email = Email;
             options.Password = Password;
+            options.Tls = TLS;
         }));
 
         services.AddTransient<ITemplateService, TemplateService>();
