@@ -7,7 +7,14 @@ A mail queue microservice for sending templated emails over SMTP with GRPC conne
 - SMTP_HOST: required, represents the SMTP host
 - SMTP_EMAIL: required, represents the SMTP username and also used as the mailfrom
 - SMTP_PASS: required, represents the SMTP password
+- SMTP_TLS: optional, true or false, true if TLS enabled, default false
 - API_KEY: required, represents the API key which secures the api access
+- MAIL_INTERVAL: optional, represents the interval length in seconds for queing the emails, default 60 
+```
+
+## Run with docker
+```bash
+docker run -e SMTP_PORT=1025 -e SMTP_HOST=testmailhost.com -e SMTP_EMAIL=test@email.com -e SMTP_PASS=password -e API_KEY=API_KEY mailq
 ```
 
 ```proto
