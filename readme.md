@@ -11,6 +11,7 @@ Both the email and the subject accepts a Dictionary (list of key value pairs whe
 The `.proto` contract describes the functionality enough, if you have any question feel free to create an issue. 
 
 ## ENV variables
+```
 - SMTP_PORT: required, represents the port number of the SMTP service
 - SMTP_HOST: required, represents the SMTP host
 - SMTP_EMAIL: required, represents the SMTP username and also used as the mailfrom
@@ -21,8 +22,15 @@ The `.proto` contract describes the functionality enough, if you have any questi
 ```
 
 ## Run with docker
+
 ```bash
-docker run -e SMTP_PORT=1025 -e SMTP_HOST=testmailhost.com -e SMTP_EMAIL=test@email.com -e SMTP_PASS=password -e API_KEY=API_KEY mailq
+docker run -e SMTP_PORT=1025 -e SMTP_HOST=testmailhost.com -e SMTP_EMAIL=test@email.com -e SMTP_PASS=password -e API_KEY=API_KEY theonlybeardedbeast/mailq
+```
+
+## The API KEY should be included in the gRPC metadata as
+
+```
+X-API-KEY=yoursecretapikey
 ```
 
 ```proto
