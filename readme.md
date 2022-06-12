@@ -27,7 +27,9 @@ The `.proto` contract describes the functionality enough, if you have any questi
 docker run -e SMTP_PORT=1025 -e SMTP_HOST=testmailhost.com -e SMTP_EMAIL=test@email.com -e SMTP_PASS=password -e API_KEY=API_KEY theonlybeardedbeast/mailq
 ```
 
-## The API KEY should be included in the gRPC metadata as
+## Proto
+
+The API KEY should be included in the gRPC metadata as
 
 ```
 X-API-KEY=yoursecretapikey
