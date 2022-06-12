@@ -8,7 +8,7 @@ on:
       - "master"
 
 jobs:
-  seetrueapi:
+  mailq:
     runs-on: ubuntu-latest
     steps:
       -
