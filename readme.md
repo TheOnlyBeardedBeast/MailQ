@@ -2,6 +2,14 @@
 
 A mail queue microservice for sending templated emails over SMTP with GRPC connection layer
 
+## Templates
+
+MailQ uses MJML in combination with Mustache to render emails. MJML templates are prerendered and cached in memory. The subjects only use Mustache for templating.
+
+Both the email and the subject accepts a Dictionary (list of key value pairs where both values are strings). You should use the same keys in your data as in you template.
+
+The `.proto` contract describes the functionality enough, if you have any question feel free to create an issue. 
+
 ## ENV variables
 - SMTP_PORT: required, represents the port number of the SMTP service
 - SMTP_HOST: required, represents the SMTP host
